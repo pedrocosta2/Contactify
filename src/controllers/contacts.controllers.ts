@@ -23,6 +23,6 @@ export const patchContactController = async (req: Request, res: Response) => {
 };
 
 export const deleteContactController = async (req: Request, res: Response) => {
-  const deleteContact = await deleteContactService(req.body);
+  await deleteContactService(req.params.id);
   return res.status(204).send();
 };

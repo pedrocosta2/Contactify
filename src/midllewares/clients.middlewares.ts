@@ -48,11 +48,17 @@ export const getOneClientMiddleware = async (
   resp: Response,
   next: NextFunction
 ) => {
-  const loggedClient = req.client;
-  if (loggedClient.id !== req.params.id) {
-    throw new AppError("you cannot access another client data", 401);
-  }
-  return next();
+ 
+    const loggedClient = req.client;
+    const clientRepo = AppDataSource.getRepository(Clients)
+    const client =  await clientRepo.findOneBy({id: req.params.id})
+    if(!client) {
+      throw new AppError("client do not exist", 404);
+    }
+    if (loggedClient.id !== req.params.id) {
+      throw new AppError("you cannot access another client data", 401);
+    }
+    return next();
 };
 
 export const authClientMiddleware = async (

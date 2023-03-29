@@ -1,4 +1,5 @@
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
+import { QueryFailedError } from "typeorm";
 import { ValidationError } from "yup";
 
 interface IAppErrorResponse {
@@ -26,6 +27,9 @@ const errorHandler = (
   }
   if (err instanceof ValidationError) {
     return res.status(401).json({ message: err.errors });
+  }
+  if(err instanceof QueryFailedError) {
+    return res.status(404).json({message:"contact no exist"})
   }
   return res.status(500).json({ message: "internal server error" });
 };

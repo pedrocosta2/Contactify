@@ -25,19 +25,17 @@ export const getOneContactMiddlewre = async (
 ) => {
   const contactRepo = AppDataSource.getRepository(Contacts);
   const findContact = await contactRepo.findOneBy({ id: req.params.id });
+  console.log(findContact)
   if (!findContact) {
     throw new AppError("contact no exist", 404);
   }
+  
   const contactQueryBuilder = contactRepo.createQueryBuilder("contacts");
   const contactAndClient = await contactQueryBuilder
     .leftJoinAndSelect("contacts.client", "client")
     .where("contacts.id = :id", { id: req.params.id })
     .getOne();
-  console.log(contactAndClient?.client.id);
-  console.log(
-    "====================================================================="
-  );
-  console.log(req.client.id);
+
   if (contactAndClient?.client.id !== req.client.id) {
     throw new AppError("you cannot access another client contacts", 403);
   }

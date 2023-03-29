@@ -21,7 +21,6 @@ export const loginClientController = async (req: Request, res: Response) => {
 
 export const getClientsController = async (req: Request, res: Response) => {
   const getClients = await getClientsService();
-
   return res.status(200).json(getClients);
 };
 

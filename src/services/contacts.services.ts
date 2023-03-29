@@ -26,7 +26,8 @@ export const getOneContactService = async (
     .where("contacts.id = :id", { id: contactId })
     .getOne();
 
-  return contactAndClient!;
+    const {client, ...treatedContact} = contactAndClient!
+  return treatedContact ;
 };
 
 export const patchContactService = async (
@@ -39,13 +40,13 @@ export const patchContactService = async (
     throw new AppError("client no exist", 404);
   }
   await contactRepo.update(contactId, body);
-  const updatedClient = contactRepo.create({ ...contact, ...body });
-  return updatedClient;
+  const updatedContact = contactRepo.create({ ...contact, ...body });
+  return updatedContact;
 };
 
 export const deleteContactService = async (clientId: string) => {
-  const clientRepo = AppDataSource.getRepository(Clients);
-  const client = await clientRepo.findOneBy({ id: clientId });
-  await clientRepo.remove(client!);
+  const contactsRepo = AppDataSource.getRepository(Contacts);
+  const contact = await contactsRepo.findOneBy({ id: clientId });
+  await contactsRepo.remove(contact!);
   return {};
 };

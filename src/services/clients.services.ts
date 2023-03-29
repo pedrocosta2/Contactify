@@ -46,18 +46,27 @@ export const getClientsService = async (): Promise<IClientResponse[]> => {
   const ClientsContacts = await clientQueryBuilder
     .leftJoinAndSelect("clients.contacts", "client")
     .getMany();
-  return ClientsContacts;
+  const treatedData = ClientsContacts.map((element) => {
+    const { password, ...newBody } = element;
+    return newBody;
+  });
+
+  return treatedData;
 };
 
 export const getOneClientService = async (
-  clientID: string
+  clientId: string
 ): Promise<IClientResponse> => {
   const clientRepo = AppDataSource.getRepository(Clients);
-  const client = await clientRepo.findOneBy({ id: clientID });
-  if (!client) {
+  const clientQueryBuilder = clientRepo.createQueryBuilder("clients");
+  const ClientsContacts = await clientQueryBuilder
+    .leftJoinAndSelect("clients.contacts", "client")
+    .where("clients.id = :id", { id: clientId })
+    .getOne();
+  if (!ClientsContacts) {
     throw new AppError("client no exist", 404);
   }
-  return client;
+  return ClientsContacts;
 };
 
 export const patchClientService = async (
