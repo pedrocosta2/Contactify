@@ -9,6 +9,7 @@ import {
 import jwt from "jsonwebtoken";
 import { request } from "express";
 import { Contacts } from "../entities/contacts.entity";
+import { hash } from "bcryptjs";
 export const createClientService = async (
   body: IClientRequest
 ): Promise<IClientResponse> => {
@@ -78,9 +79,11 @@ export const patchClientService = async (
   if (!client) {
     throw new AppError("client no exist", 404);
   }
+  body.password =  await hash(body.password, 10)
   await clientRepo.update(clientId, body);
   const updatedClient = clientRepo.create({ ...client, ...body });
   const { password, ...treatedClient } = updatedClient;
+  
   return treatedClient;
 };
 
