@@ -29,14 +29,14 @@ clientsRouter.post("/login", loginClientMiddleware, loginClientController);
 clientsRouter.get("/clients", authClientMiddleware, getClientsController);
 
 clientsRouter.get(
-  "/clients/:id",
+  "/clients/profile",
   authClientMiddleware,
   getOneClientMiddleware,
   getOneClientController
 );
 
 clientsRouter.patch(
-  "/clients/:id",
+  "/clients/profile",
   authClientMiddleware,
   getOneClientMiddleware,
   patchClientMiddleware(updateClientShape),
@@ -44,7 +44,7 @@ clientsRouter.patch(
 );
 
 clientsRouter.delete(
-  "/clients/:id",
+  "/clients/profile",
   authClientMiddleware,
   getOneClientMiddleware,
   deleteClientController

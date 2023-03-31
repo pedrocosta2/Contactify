@@ -25,16 +25,16 @@ export const getClientsController = async (req: Request, res: Response) => {
 };
 
 export const getOneClientController = async (req: Request, res: Response) => {
-  const getClient = await getOneClientService(req.params.id);
+  const getClient = await getOneClientService(req.client.id);
   return res.status(200).json(getClient);
 };
 
 export const patchClientController = async (req: Request, res: Response) => {
-  const patchClient = await patchClientService(req.body, req.params.id);
+  const patchClient = await patchClientService(req.body, req.client.id);
   return res.status(200).json(patchClient);
 };
 
 export const deleteClientController = async (req: Request, res: Response) => {
-  await deleteClientService(req.params.id);
+  await deleteClientService(req.client.id);
   return res.status(204).send();
 };

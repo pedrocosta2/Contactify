@@ -51,11 +51,11 @@ export const getOneClientMiddleware = async (
  
     const loggedClient = req.client;
     const clientRepo = AppDataSource.getRepository(Clients)
-    const client =  await clientRepo.findOneBy({id: req.params.id})
+    const client =  await clientRepo.findOneBy({id: req.client.id})
     if(!client) {
       throw new AppError("client do not exist", 404);
     }
-    if (loggedClient.id !== req.params.id) {
+    if (loggedClient.id !== req.client.id) {
       throw new AppError("you cannot access another client data", 401);
     }
     return next();

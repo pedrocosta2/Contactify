@@ -81,8 +81,9 @@ export const patchClientService = async (
   }
   body.password =  await hash(body.password, 10)
   await clientRepo.update(clientId, body);
-  const updatedClient = clientRepo.create({ ...client, ...body });
-  const { password, ...treatedClient } = updatedClient;
+   clientRepo.create({ ...client, ...body });
+   const findClient = await clientRepo.findOneBy({id:clientId})
+  const { password, ...treatedClient } = findClient!;
   
   return treatedClient;
 };
