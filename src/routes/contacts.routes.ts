@@ -7,7 +7,7 @@ import {
 } from "../controllers/contacts.controllers";
 import { createMiddleware } from "../midllewares/clients.middlewares";
 import { createClientShape } from "../schemas/clients.schemas";
-import { createContactShape } from "../schemas/contacts.schemas";
+import { createContactShape, updateContactShape } from "../schemas/contacts.schemas";
 import { authClientMiddleware } from "../midllewares/clients.middlewares";
 import {
   createContactMiddlewre,
@@ -35,7 +35,7 @@ contactsRouter.patch(
   "/contacts/:id",
   authClientMiddleware,
   getOneContactMiddlewre,
-  createMiddleware(createContactShape),
+  createMiddleware(updateContactShape),
   patchContactController
 );
 

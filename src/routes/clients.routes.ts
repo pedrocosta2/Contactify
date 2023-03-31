@@ -14,7 +14,7 @@ import {
   loginClientMiddleware,
   patchClientMiddleware,
 } from "../midllewares/clients.middlewares";
-import { createClientShape } from "../schemas/clients.schemas";
+import { createClientShape, updateClientShape } from "../schemas/clients.schemas";
 
 const clientsRouter = Router();
 
@@ -39,7 +39,7 @@ clientsRouter.patch(
   "/clients/:id",
   authClientMiddleware,
   getOneClientMiddleware,
-  patchClientMiddleware(createClientShape),
+  patchClientMiddleware(updateClientShape),
   patchClientController
 );
 
