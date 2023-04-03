@@ -17,7 +17,14 @@ import {
 import { createClientShape, updateClientShape } from "../schemas/clients.schemas";
 
 const clientsRouter = Router();
+//Routes
+/** 
+* / @swagger 
+*post:
+*use to criate
+*response: 200
 
+*/
 clientsRouter.post(
   "/clients",
   createMiddleware(createClientShape),

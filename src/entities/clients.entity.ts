@@ -35,6 +35,6 @@ export class Clients {
     this.password = hashSync(this.password, 10);
   }
 
-  @OneToMany(() => Contacts, (contacts) => contacts.client)
+  @OneToMany(() => Contacts, (contacts) => contacts.client, {cascade: true})
   contacts: Contacts[];
 }

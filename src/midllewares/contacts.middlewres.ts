@@ -25,7 +25,6 @@ export const getOneContactMiddlewre = async (
 ) => {
   const contactRepo = AppDataSource.getRepository(Contacts);
   const findContact = await contactRepo.findOneBy({ id: req.params.id });
-  console.log(findContact)
   if (!findContact) {
     throw new AppError("contact no exist", 404);
   }

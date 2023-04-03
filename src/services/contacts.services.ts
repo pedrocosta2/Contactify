@@ -40,8 +40,8 @@ export const patchContactService = async (
     throw new AppError("client no exist", 404);
   }
   await contactRepo.update(contactId, body);
-  const updatedContact = contactRepo.create({ ...contact, ...body });
-  return updatedContact;
+  const updatedContact = await contactRepo.findOneBy({id: contactId});
+  return updatedContact!;
 };
 
 export const deleteContactService = async (clientId: string) => {

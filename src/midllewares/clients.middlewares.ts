@@ -67,7 +67,6 @@ export const authClientMiddleware = async (
   next: NextFunction
 ) => {
   const authToken = req.headers.authorization;
-
   if (!authToken) {
     throw new AppError("token is required", 401);
   }
@@ -78,5 +77,6 @@ export const authClientMiddleware = async (
     }
     req.client = { id: decoded.sub, email: decoded.email };
   });
+
   return next();
 };

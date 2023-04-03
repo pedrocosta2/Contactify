@@ -24,6 +24,6 @@ export class Contacts {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => Clients, (client) => client.contacts)
+  @ManyToOne(() => Clients, (client) => client.contacts, {onDelete: "CASCADE"})
   client: Clients;
 }

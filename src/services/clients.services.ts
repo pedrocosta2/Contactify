@@ -79,9 +79,11 @@ export const patchClientService = async (
   if (!client) {
     throw new AppError("client no exist", 404);
   }
-  body.password =  await hash(body.password, 10)
+  if(body.password) {
+    body.password =  await hash(body.password, 10)
+  }
+  
   await clientRepo.update(clientId, body);
-   clientRepo.create({ ...client, ...body });
    const findClient = await clientRepo.findOneBy({id:clientId})
   const { password, ...treatedClient } = findClient!;
   
@@ -90,7 +92,8 @@ export const patchClientService = async (
 
 export const deleteClientService = async (clientId: string) => {
   const clientRepo = AppDataSource.getRepository(Clients);
+  
   const client = await clientRepo.findOneBy({ id: clientId });
-  await clientRepo.remove(client!);
+  const pedro = await clientRepo.remove(client!);
   return {};
 };
